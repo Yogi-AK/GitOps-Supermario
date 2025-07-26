@@ -1,0 +1,21 @@
+name: Super Mario CI
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+    build:
+        runs-on: ubuntu-latest
+    
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4.1.1
+              with:
+                fetch-depth: 0
+                
+            - name: SonarScan
+              uses: SonarSource/sonarscan-action@master
+              env:
+                SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+                SONAR_HOST_URL: 'http://localhost:9000/'

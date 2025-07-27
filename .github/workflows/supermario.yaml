@@ -48,7 +48,7 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: 'image'
-          image: ${{ env.DOCKER_USERNAME }}/gitops-project:${{ env.IMAGE_TAG }}
+          scan-ref: ${{ env.DOCKER_USERNAME }}/gitops-project:${{ env.IMAGE_TAG }}
           exit-code: '1'
           severity: 'CRITICAL,HIGH'
           format: 'table'

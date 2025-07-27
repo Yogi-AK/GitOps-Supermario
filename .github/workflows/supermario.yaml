@@ -17,24 +17,7 @@ jobs:
         uses: actions/checkout@v4.1.1
         with:
           fetch-depth: 0
-  # Run-SonarQube-Scan:
-  #   runs-on: ubuntu-latest
-  #   steps:      
-  #     - name: SonarScan
-  #       uses: SonarSource/sonarqube-scan-action@master
-  #       env:
-  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  #         SONAR_HOST_URL: 'http://localhost:9000/'
-          
-  #     - name: Sonarqube quality Gate Check
-  #       uses: SonarSource/sonarqube-quality-gate-action@master
-  #       timeout-minutes: 15
-  #       env:
-  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-  # Build-Push-Docker-Image:
-  #   runs-on: ubuntu-latest
-  #   steps:
       - name: Docker login
         run: |
           echo "${{ env.DOCKER_TOKEN }}" | docker login -u "${{ env.DOCKER_USERNAME }}" --password-stdin
@@ -47,6 +30,7 @@ jobs:
       - name: Get Docker Image from Docker Hub
         run: |
           docker save -o supermariodockerimage.tar ${{ env.DOCKER_USERNAME }}/gitops-project:${{ env.IMAGE_TAG }}
+
       - name: Run Trivy vulnerability scanner in tarball mode
         uses: aquasecurity/trivy-action@master
         with:

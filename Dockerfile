@@ -1,4 +1,4 @@
-FROM tomcat:9.0.73-jdk11-openjdk-slim
+FROM tomcat:9.0.14-jre8-alpine
 LABEL maintainer="Yogi"
 LABEL description="Supermario application Docker image"
 #Remove the default webapps

@@ -19,10 +19,9 @@ jobs:
               env:
                 SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
                 SONAR_HOST_URL: 'http://localhost:9000/'
-
+                
             - name: Sonarqube quality Gate Check
               uses: SonarSource/sonarqube-quality-gate-action@master
               timeout-minutes: 15
               env:
                 SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-                

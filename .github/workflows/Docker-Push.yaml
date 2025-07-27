@@ -1,0 +1,24 @@
+name: Build and push static tag to Docker hub
+on:
+  push:
+    branches:
+      - main
+env:
+    DOCKER_USERNAME: 'shivay'
+    DOCKER_TOKEN: 'dckr_pat_QiFRvB6zcLDtCd9BbrUNcbC8RfQ'
+jobs:
+    Build-Push-Docker-Image:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4.1.1
+              with:
+                fetch-depth: 0
+            - name: Docker login
+              run: |
+                echo "${{ env.DOCKER_TOKEN }}" | docker login -u "${{ env.DOCKER_USERNAME }}" --password-stdin
+
+            - name: Build and push Docker image
+              run: |
+                docker build -t ${{ env.DOCKER_USERNAME }}/gitops-project:1 .
+                docker push ${{ env.DOCKER_USERNAME }}/gitops-project:1

@@ -44,13 +44,15 @@ jobs:
           docker build -t ${{ env.DOCKER_USERNAME }}/gitops-project:${{ env.IMAGE_TAG }} .
           docker push ${{ env.DOCKER_USERNAME }}/gitops-project:${{ env.IMAGE_TAG }}
 
-      - name: Run Trivy vulnerability scanner
+      - name: Get Docker Image from Docker Hub
+        run: |
+          docker pull ${{ env.DOCKER_USERNAME }}/gitops-project:${{ env.IMAGE_TAG }}
+          docker save -o supermariodockerimage.tar ${{ env.DOCKER_USERNAME }}/gitops-project:${{ env.VERSION }}
+
+      - name: Run Trivy vulnerability scanner in tarball mode
         uses: aquasecurity/trivy-action@master
         with:
-          scan-type: 'image'
-          scan-ref: ${{ env.DOCKER_USERNAME }}/gitops-project:${{ env.IMAGE_TAG }}
+          input: /github/workspace/supermariodockerimage.tar
           exit-code: '1'
           severity: 'CRITICAL,HIGH'
           format: 'table'
-          ignore-unfixed: true
-          #vuln-type: 'os,library'

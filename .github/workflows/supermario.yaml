@@ -50,7 +50,7 @@ jobs:
           #docker pull ${{ env.DOCKER_USERNAME }}/gitops-project:${{ env.IMAGE_TAG }}
           docker save -o supermariodockerimage.tar ${{ env.DOCKER_USERNAME }}/gitops-project:${{ env.IMAGE_TAG }}
           docker  images
-          ls-lrt /github/workspace
+          ls -lrt /github/workspace
           
       - name: Run Trivy vulnerability scanner in tarball mode
         uses: aquasecurity/trivy-action@master
